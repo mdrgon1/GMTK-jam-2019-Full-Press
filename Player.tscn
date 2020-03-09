@@ -1,0 +1,137 @@
+[gd_scene load_steps=39 format=2]
+
+[ext_resource path="res://Player/StateMachine.gd" type="Script" id=1]
+[ext_resource path="res://Player/PlayerAnimations/Running/Running02.png" type="Texture" id=2]
+[ext_resource path="res://Player/PlayerAnimations/Running/Running07.png" type="Texture" id=3]
+[ext_resource path="res://Player/PlayerAnimations/Running/Running08.png" type="Texture" id=4]
+[ext_resource path="res://Player/PlayerAnimations/Running/Running05.png" type="Texture" id=5]
+[ext_resource path="res://Player/PlayerAnimations/Running/Running06.png" type="Texture" id=6]
+[ext_resource path="res://Player/PlayerAnimations/Idle/pixil-frame-0.png" type="Texture" id=7]
+[ext_resource path="res://Player/PlayerAnimations/Idle/pixil-frame-1.png" type="Texture" id=8]
+[ext_resource path="res://Player/PlayerAnimations/Idle/pixil-frame-2.png" type="Texture" id=9]
+[ext_resource path="res://Player/PlayerAnimations/Idle/pixil-frame-3.png" type="Texture" id=10]
+[ext_resource path="res://Player/PlayerAnimations/Dying/pixil-frame-0.png" type="Texture" id=11]
+[ext_resource path="res://Player/PlayerAnimations/Dying/pixil-frame-1.png" type="Texture" id=12]
+[ext_resource path="res://Player/PlayerAnimations/Dying/pixil-frame-2.png" type="Texture" id=13]
+[ext_resource path="res://Player/PlayerAnimations/Dying/pixil-frame-3.png" type="Texture" id=14]
+[ext_resource path="res://Player/PlayerAnimations/Running/Running03.png" type="Texture" id=15]
+[ext_resource path="res://Player/PlayerAnimations/Crouching/pixil-frame-0.png" type="Texture" id=16]
+[ext_resource path="res://Player/PlayerAnimations/Sliding/pixil-frame-0.png" type="Texture" id=17]
+[ext_resource path="res://Player/PlayerAnimations/Sliding/pixil-frame-1.png" type="Texture" id=18]
+[ext_resource path="res://Player/PlayerAnimations/Jumping/pixil-frame-0.png" type="Texture" id=19]
+[ext_resource path="res://Player/PlayerAnimations/Jumping/pixil-frame-1.png" type="Texture" id=20]
+[ext_resource path="res://Player/PlayerAnimations/Diving/pixil-frame-0.png" type="Texture" id=21]
+[ext_resource path="res://Player/PlayerAnimations/Diving/pixil-frame-1.png" type="Texture" id=22]
+[ext_resource path="res://Player/PlayerAnimations/Diving/pixil-frame-2.png" type="Texture" id=23]
+[ext_resource path="res://Player/PlayerAnimations/Diving/pixil-frame-3.png" type="Texture" id=24]
+[ext_resource path="res://Player/PlayerAnimations/Falling/pixil-frame-0.png" type="Texture" id=25]
+[ext_resource path="res://Player/PlayerAnimations/Falling/pixil-frame-1.png" type="Texture" id=26]
+[ext_resource path="res://Player/PlayerAnimations/PlayerSprite.gd" type="Script" id=27]
+[ext_resource path="res://Player/PlayerCollision.gd" type="Script" id=28]
+[ext_resource path="res://Player/States/Running.gd" type="Script" id=29]
+[ext_resource path="res://Player/States/Jumping.gd" type="Script" id=30]
+[ext_resource path="res://Player/States/Falling.gd" type="Script" id=31]
+[ext_resource path="res://Player/States/Crouching.gd" type="Script" id=32]
+[ext_resource path="res://Player/States/Diving.gd" type="Script" id=33]
+[ext_resource path="res://Player/States/Dying.gd" type="Script" id=34]
+[ext_resource path="res://Player/States/Sprinting.gd" type="Script" id=35]
+[ext_resource path="res://Player/States/Sliding.gd" type="Script" id=36]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "Running",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), null ],
+"loop": true,
+"name": "Dying",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "Sprinting",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 16 ) ],
+"loop": true,
+"name": "Crouching",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "Sliding",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 19 ), ExtResource( 20 ) ],
+"loop": false,
+"name": "Jumping",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "Diving",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 25 ), ExtResource( 26 ) ],
+"loop": false,
+"name": "Falling",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 14, 24 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="PlayerSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 2, 2 )
+frames = SubResource( 1 )
+animation = "Dying"
+playing = true
+script = ExtResource( 27 )
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+script = ExtResource( 28 )
+
+[node name="States" type="Node" parent="."]
+
+[node name="Running" type="Node" parent="States"]
+script = ExtResource( 29 )
+
+[node name="Jumping" type="Node" parent="States"]
+script = ExtResource( 30 )
+
+[node name="Falling" type="Node" parent="States"]
+script = ExtResource( 31 )
+
+[node name="Crouching" type="Node" parent="States"]
+script = ExtResource( 32 )
+
+[node name="Diving" type="Node" parent="States"]
+script = ExtResource( 33 )
+
+[node name="Dying" type="Node" parent="States"]
+script = ExtResource( 34 )
+
+[node name="Sprinting" type="Node" parent="States"]
+script = ExtResource( 35 )
+
+[node name="Sliding" type="Node" parent="States"]
+script = ExtResource( 36 )
+[connection signal="Crouching" from="." to="PlayerCollision" method="_on_Player_Crouching"]
+[connection signal="Direction" from="." to="PlayerSprite" method="_on_Player_Direction"]
+[connection signal="Diving" from="." to="PlayerCollision" method="_on_Player_Diving"]
+[connection signal="Doing" from="." to="PlayerSprite" method="_on_Player_Doing"]
+[connection signal="Sliding" from="." to="PlayerCollision" method="_on_Player_Sliding"]
