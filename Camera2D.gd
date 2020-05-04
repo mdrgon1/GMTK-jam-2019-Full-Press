@@ -15,7 +15,9 @@ func _process(delta):
 func _on_Level_End(body):
 	if body == get_node("../Player"):
 		level += 1
-		target_position = get_node(String(level).insert(0, "../Level")).position
+		var level_node = get_node(String(level).insert(0, "../Level"))
+		if(level_node):
+			target_position = level_node.position
 		if level >= 11:
 			set_z_index(5)
 			$endscreen.set_z_index(5)

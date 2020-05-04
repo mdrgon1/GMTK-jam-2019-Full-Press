@@ -13,6 +13,7 @@ var level_ends = [
 	Vector2(-1360, 48),
 	Vector2(-1744, -48),
 	Vector2(-2128, -48),
+	Vector2(0, 0)
 ]
 
 func _process(delta):
